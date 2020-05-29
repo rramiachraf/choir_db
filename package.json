@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon main.ts --exec 'ts-node'",
-    "build": "tsc main.ts"
+    "dev": "nodemon demo.ts --exec 'ts-node'",
+    "build": "tsc index.ts"
   },
   "dependencies": {
     "better-sqlite3": "^7.0.1"
