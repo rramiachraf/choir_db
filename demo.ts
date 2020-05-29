@@ -1,4 +1,4 @@
-import setDB from "./setDB";
+import setDB from ".";
 
 const metadata = {
   path: "/home/achraf/Music/Wesley's Theory.mp3",
