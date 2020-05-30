@@ -21,47 +21,54 @@ export default (metadata: SongMetadata): void => {
   /*                                   GENRES                                   */
   /* -------------------------------------------------------------------------- */
 
-  const pre_genres = db.prepare(
-    "INSERT OR IGNORE INTO genres (genre_name) VALUES (@genre)"
-  )
+  if (genres.length > 0) {
+    const pre_genres = db.prepare(
+      "INSERT OR IGNORE INTO genres (genre_name) VALUES (@genre)"
+    );
 
-  genres.length > 0 &&
     genres.forEach((genre) => {
-      pre_genres.run({ genre: genre.toLowerCase() })
-    })
+      pre_genres.run({ genre: genre.toLowerCase() });
+    });
+  }
 
   /* -------------------------------------------------------------------------- */
   /*                                   ARTIST                                   */
   /* -------------------------------------------------------------------------- */
 
-  const pre_artist = db.prepare(
-    "INSERT OR IGNORE INTO artists (artist_name) VALUES (@artist)"
-  )
+  if (artist) {
+    const pre_artist = db.prepare(
+      "INSERT OR IGNORE INTO artists (artist_name) VALUES (@artist)"
+    );
 
-  artist && pre_artist.run({ artist })
+    pre_artist.run({ artist });
+  }
 
   /* -------------------------------------------------------------------------- */
   /*                                    ALBUM                                   */
   /* -------------------------------------------------------------------------- */
 
-  const pre_album = db.prepare(
-    `
+  if (album) {
+    const pre_album = db.prepare(
+      `
     INSERT INTO albums (album_name, album_artist, album_artwork)
     VALUES(
       @album,
       (SELECT artist_id FROM artists WHERE artist_name = @artist),
       @artwork
       )`
-  );
+    );
 
-  album && pre_album.run({ album, artist, artwork });
+    pre_album.run({ album, artist, artwork });
+  }
 
   /* -------------------------------------------------------------------------- */
   /*                                    TRACK                                   */
   /* -------------------------------------------------------------------------- */
 
   const pre_track = db.prepare(`
-    INSERT INTO tracks (track_path, track_artist, track_title, track_year, track_artwork, track_album, track_bitrate, track_duration, track_format )
+    INSERT INTO tracks (track_path, track_artist, track_title,
+      track_year, track_artwork, track_album, track_bitrate,
+      track_duration, track_format )
     VALUES (
       @path,
       (SELECT artist_id FROM artists WHERE artist_name = @artist),
