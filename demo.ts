@@ -1,16 +1,16 @@
-import setDB from ".";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+import { getTracks } from './index';
 
 const metadata = {
-  path: "/home/achraf/Music/Wesley's Theory.mp3",
-  artist: "Kendrick Lamar",
-  title: "Wesley's Theory",
-  genres: ["Hip Hop", "rap"],
-  year: 2014,
-  artwork: "/home/achraf/Music/.thumbnails/12365-aasa.png",
-  album: "To Pimp A Butterfly",
+  path: '/home/achraf/Music/Superman.mp3',
+  artist: 'Eminem',
+  title: 'Superman',
+  genres: ['Hip Hop', 'rap'],
+  year: 2002,
+  artwork: '/home/achraf/Music/.thumbnails/12365-aasa.png',
+  album: 'The Eminem Show',
   bitrate: 320000,
   duration: 420.3,
-  format: "MP3",
+  format: 'MP3'
 };
-
-setDB(metadata);

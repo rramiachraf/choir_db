@@ -1,46 +1,48 @@
-import Database from "better-sqlite3";
-import { SongMetadata } from "./types";
+import Database from 'better-sqlite3';
+import SCHEMA from './SCHEMA';
+import { SongMetadata, AlbumInfo, ArtistInfo } from './types';
 
-export default (metadata: SongMetadata): void => {
-  const db = new Database("config.db");
+const file = 'config.db';
+const db = new Database(file);
 
-  const {
-    artist,
-    genres,
-    album,
-    title,
-    path,
-    year,
-    artwork,
-    bitrate,
-    duration,
-    format,
-  } = metadata;
+export const setTrackToDB = ({
+  artist,
+  genres,
+  album,
+  title,
+  path,
+  year,
+  artwork,
+  bitrate,
+  duration,
+  format
+}: SongMetadata): void => {
+  db.exec(SCHEMA);
 
   /* -------------------------------------------------------------------------- */
   /*                                   GENRES                                   */
   /* -------------------------------------------------------------------------- */
 
-  if (genres.length > 0) {
-    const pre_genres = db.prepare(
-      "INSERT OR IGNORE INTO genres (genre_name) VALUES (@genre)"
-    );
+  // if (genres.length > 0) {
+  //   const pre_genres = db.prepare(
+  //     "INSERT OR IGNORE INTO genres (genre_name) VALUES (@genre)"
+  //   );
 
-    genres.forEach((genre) => {
-      pre_genres.run({ genre: genre.toLowerCase() });
-    });
-  }
+  //   genres.forEach((genre) => {
+  //     pre_genres.run({ genre: genre.toLowerCase() });
+  //   });
+  // }
 
   /* -------------------------------------------------------------------------- */
   /*                                   ARTIST                                   */
   /* -------------------------------------------------------------------------- */
 
   if (artist) {
-    const pre_artist = db.prepare(
-      "INSERT OR IGNORE INTO artists (artist_name) VALUES (@artist)"
+    const preArtist = db.prepare(
+      'INSERT OR IGNORE INTO artists (artistName) VALUES (@artist)'
     );
 
-    pre_artist.run({ artist });
+    preArtist.run({ artist });
   }
 
   /* -------------------------------------------------------------------------- */
@@ -48,50 +50,101 @@ export default (metadata: SongMetadata): void => {
   /* -------------------------------------------------------------------------- */
 
   if (album) {
-    const pre_album = db.prepare(
+    const check = db
+      .prepare(
+        `
+    SELECT albumName, artistName FROM albums 
+    LEFT JOIN artists ON albums.albumArtist = artists.artistId 
+    WHERE albumName = @album AND artistName = @artist AND albumYear = @year`
+      )
+      .get({ album, artist, year });
+    const preAlbum = db.prepare(
       `
-    INSERT INTO albums (album_name, album_artist, album_artwork)
+    INSERT INTO albums (albumName, albumArtist, albumArtwork, albumYear)
     VALUES(
       @album,
-      (SELECT artist_id FROM artists WHERE artist_name = @artist),
-      @artwork
+      (SELECT artistId FROM artists WHERE artistName = @artist),
+      @artwork,
+      @year
       )`
     );
 
-    pre_album.run({ album, artist, artwork });
+    if (check === undefined) {
+      preAlbum.run({
+        album,
+        artist,
+        artwork,
+        year
+      });
+    }
   }
 
   /* -------------------------------------------------------------------------- */
   /*                                    TRACK                                   */
   /* -------------------------------------------------------------------------- */
 
-  const pre_track = db.prepare(`
-    INSERT INTO tracks (track_path, track_artist, track_title,
-      track_year, track_artwork, track_album, track_bitrate,
-      track_duration, track_format )
+  const preTrack = db.prepare(`
+    INSERT OR IGNORE INTO tracks (trackPath, trackArtist, trackTitle,
+      trackGenres, trackYear, trackArtwork, trackAlbum, 
+      trackBitrate, trackDuration, trackFormat )
     VALUES (
       @path,
-      (SELECT artist_id FROM artists WHERE artist_name = @artist),
+      (SELECT artistId FROM artists WHERE artistName = @artist),
       @title,
-      ${/* TODO find a way to reference genres*/ ""}
+      @genres,
       @year,
       @artwork,
-      (SELECT album_id FROM albums WHERE album_name = @album),
+      (SELECT albumId FROM albums WHERE albumName = @album),
       @bitrate,
       @duration,
       @format
     )
   `);
 
-  pre_track.run({
+  preTrack.run({
     path,
     artist,
     title,
+    genres: JSON.stringify(genres),
     year,
     artwork,
     album,
     bitrate,
     duration,
-    format,
+    format
   });
+};
+
+export const getAllAlbums = (): AlbumInfo[] => {
+  const statement = `
+    SELECT
+    albumId, 
+    albumName,
+    albumArtwork, 
+    albumYear,
+    artistName
+    FROM albums 
+    LEFT JOIN 
+    artists ON albums.albumArtist = artists.artistId
+  `;
+  const albums = db.prepare(statement).all();
+
+  return albums;
+};
+
+export const getArtists = (): ArtistInfo[] => {
+  const artists = db.prepare('SELECT * FROM artists').all();
+  return artists;
+};
+
+export const getTracks = (album: string): SongMetadata[] => {
+  const tracks = db
+    .prepare(
+      `
+    SELECT * from tracks 
+    LEFT JOIN albums ON tracks.trackAlbum = albums.albumId 
+    WHERE albums.albumName = @album`
+    )
+    .all({ album });
+  return tracks;
 };
