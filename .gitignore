@@ -1,3 +1,7 @@
 node_modules
 main.js
 config.db
+demo.js
+index.js
+SCHEMA.js
+types.js
