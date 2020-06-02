@@ -1,4 +1,4 @@
-import Database from 'better-sqlite3';
+import Database = require('better-sqlite3');
 import SCHEMA from './SCHEMA';
 import { SongMetadata, AlbumInfo, ArtistInfo } from './types';
 
