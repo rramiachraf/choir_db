@@ -3,7 +3,7 @@ import SCHEMA from './SCHEMA';
 import { SongMetadata, AlbumInfo, ArtistInfo } from './types';
 
 const file = 'config.db';
-const db = new Database(file);
+export const db = new Database(file);
 
 export const setTrackToDB = ({
   artist,
@@ -141,9 +141,25 @@ export const getTracks = (album: string): SongMetadata[] => {
   const tracks = db
     .prepare(
       `
-    SELECT * from tracks 
-    LEFT JOIN albums ON tracks.trackAlbum = albums.albumId 
-    WHERE albums.albumName = @album`
+    SELECT 
+    trackId AS id, 
+    trackPath AS path, 
+    trackTitle AS title, 
+    trackGenres AS genres, 
+    trackArtwork AS artwork,
+    trackBitrate AS bitrate,
+    trackYear AS year,
+    trackDuration AS duration,
+    trackFormat AS format,
+    albumName AS album,
+    artistName AS artist
+    FROM tracks 
+    LEFT JOIN albums 
+      ON tracks.trackAlbum = albums.albumId 
+    LEFT JOIN artists ON 
+      tracks.trackArtist = artists.artistId
+    WHERE albums.albumName = @album
+    `
     )
     .all({ album });
   return tracks;

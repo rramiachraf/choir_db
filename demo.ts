@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import { getTracks } from './index';
 
 const metadata = {
@@ -14,3 +12,5 @@ const metadata = {
   duration: 420.3,
   format: 'MP3'
 };
+
+console.log(getTracks(metadata.album));
