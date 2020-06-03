@@ -1,4 +1,4 @@
-import { getTracks } from './index';
+import { setTrackToDB, getTracks } from './index';
 
 const metadata = {
   path: '/home/achraf/Music/Superman.mp3',
@@ -13,4 +13,9 @@ const metadata = {
   format: 'MP3'
 };
 
-console.log(getTracks(metadata.album));
+const id = 1;
+
+// @INIT
+// setTrackToDB(metadata);
+
+console.log(getTracks(id));
