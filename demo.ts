@@ -16,6 +16,6 @@ const metadata = {
 const id = 1;
 
 // @INIT
-// setTrackToDB(metadata);
+setTrackToDB(metadata);
 
-console.log(getTracks(id));
+// console.log(getTracks(id));
