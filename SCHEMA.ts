@@ -25,4 +25,11 @@ CREATE TABLE IF NOT EXISTS albums (
   albumArtwork TEXT,
   albumYear INT,
   FOREIGN KEY (albumArtist) REFERENCES artists (artistId)
-);`;
+);
+INSERT INTO artists (artistName) VALUES ("Unknown")
+INSERT INTO albums (albumName, albumArtist)
+VALUES(
+  "Unknown",
+  (SELECT artistId FROM artists WHERE artistName = "Unknown")
+  )
+`;
