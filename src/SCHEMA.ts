@@ -2,12 +2,12 @@ export default `
 CREATE TABLE IF NOT EXISTS tracks (
   trackId INTEGER PRIMARY KEY,
   trackPath TEXT UNIQUE,
-  trackArtist INTEGER DEFAULT -1,
+  trackArtist INTEGER,
   trackTitle TEXT,
   trackGenres TEXT,
   trackYear INTEGER,
   trackArtwork TEXT,
-  trackAlbum INTEGER DEFAULT -1,
+  trackAlbum INTEGER,
   trackBitrate INTEGER,
   trackDuration INTEGER,
   trackFormat TEXT,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS albums (
   FOREIGN KEY (albumArtist) REFERENCES artists (artistId)
 );
 INSERT OR IGNORE INTO artists (artistName) VALUES ('Unknown');
-INSERT OR IGNORE INTO albums (albumName, albumArtist)
+INSERT OR REPLACE INTO albums (albumName, albumArtist)
 VALUES(
   'Unknown',
   (SELECT artistId FROM artists WHERE artistName = 'Unknown')

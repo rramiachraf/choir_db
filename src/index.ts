@@ -1,8 +1,8 @@
-import Database = require('better-sqlite3');
-import SCHEMA from './SCHEMA';
-import { SongMetadata, AlbumInfo, ArtistInfo } from './types';
+import Database = require("better-sqlite3");
+import SCHEMA from "./SCHEMA";
+import { SongMetadata, AlbumInfo, ArtistInfo } from "./types";
 
-const file = 'config.db';
+const file = "config.db";
 export const db = new Database(file);
 
 export const setTrackToDB = ({
@@ -15,9 +15,15 @@ export const setTrackToDB = ({
   artwork,
   bitrate,
   duration,
-  format
+  format,
 }: SongMetadata): void => {
-  db.exec(SCHEMA);
+  const checkTables = db
+    .prepare(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='albums'"
+    )
+    .get();
+
+  !checkTables && db.exec(SCHEMA);
 
   /* -------------------------------------------------------------------------- */
   /*                                   GENRES                                   */
@@ -39,7 +45,7 @@ export const setTrackToDB = ({
 
   if (artist) {
     const preArtist = db.prepare(
-      'INSERT OR IGNORE INTO artists (artistName) VALUES (@artist)'
+      "INSERT OR IGNORE INTO artists (artistName) VALUES (@artist)"
     );
 
     preArtist.run({ artist });
@@ -74,7 +80,7 @@ export const setTrackToDB = ({
         album,
         artist,
         artwork,
-        year
+        year,
       });
     }
   }
@@ -111,7 +117,7 @@ export const setTrackToDB = ({
     album,
     bitrate,
     duration,
-    format
+    format,
   });
 };
 
@@ -133,7 +139,7 @@ export const getAllAlbums = (): AlbumInfo[] => {
 };
 
 export const getArtists = (): ArtistInfo[] => {
-  const artists = db.prepare('SELECT * FROM artists').all();
+  const artists = db.prepare("SELECT * FROM artists").all();
   return artists;
 };
 
