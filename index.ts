@@ -55,9 +55,9 @@ export const setTrackToDB = ({
         `
     SELECT albumName, artistName FROM albums 
     LEFT JOIN artists ON albums.albumArtist = artists.artistId 
-    WHERE albumName = @album AND artistName = @artist AND albumYear = @year`
+    WHERE albumName = @album AND artistName = @artist`
       )
-      .get({ album, artist, year });
+      .get({ album, artist });
     const preAlbum = db.prepare(
       `
     INSERT INTO albums (albumName, albumArtist, albumArtwork, albumYear)

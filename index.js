@@ -31,8 +31,8 @@ exports.setTrackToDB = function (_a) {
     /* -------------------------------------------------------------------------- */
     if (album) {
         var check = exports.db
-            .prepare("\n    SELECT albumName, artistName FROM albums \n    LEFT JOIN artists ON albums.albumArtist = artists.artistId \n    WHERE albumName = @album AND artistName = @artist AND albumYear = @year")
-            .get({ album: album, artist: artist, year: year });
+            .prepare("\n    SELECT albumName, artistName FROM albums \n    LEFT JOIN artists ON albums.albumArtist = artists.artistId \n    WHERE albumName = @album AND artistName = @artist")
+            .get({ album: album, artist: artist });
         var preAlbum = exports.db.prepare("\n    INSERT INTO albums (albumName, albumArtist, albumArtwork, albumYear)\n    VALUES(\n      @album,\n      (SELECT artistId FROM artists WHERE artistName = @artist),\n      @artwork,\n      @year\n      )");
         if (check === undefined) {
             preAlbum.run({
