@@ -1,4 +1,4 @@
-import { setTrackToDB, getTracks } from './index';
+import { setTrackToDB, getTracks } from './src/index';
 
 const metadata = {
   path: '/home/achraf/Music/Superman.mp3',

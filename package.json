@@ -1,11 +1,11 @@
 {
   "name": "choir_db",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon demo.ts --exec 'ts-node'",
-    "build": "tsc index.ts"
+    "build": "tsc"
   },
   "dependencies": {
     "better-sqlite3": "^7.0.1"
