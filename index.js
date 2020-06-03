@@ -69,9 +69,9 @@ exports.getArtists = function () {
     var artists = exports.db.prepare('SELECT * FROM artists').all();
     return artists;
 };
-exports.getTracks = function (album) {
+exports.getTracks = function (id) {
     var tracks = exports.db
-        .prepare("\n    SELECT \n    trackId AS id, \n    trackPath AS path, \n    trackTitle AS title, \n    trackGenres AS genres, \n    trackArtwork AS artwork,\n    trackBitrate AS bitrate,\n    trackYear AS year,\n    trackDuration AS duration,\n    trackFormat AS format,\n    albumName AS album,\n    artistName AS artist\n    FROM tracks \n    LEFT JOIN albums \n      ON tracks.trackAlbum = albums.albumId \n    LEFT JOIN artists ON \n      tracks.trackArtist = artists.artistId\n    WHERE albums.albumName = @album\n    ")
-        .all({ album: album });
+        .prepare("\n    SELECT \n    trackId AS id, \n    trackPath AS path, \n    trackTitle AS title, \n    trackGenres AS genres, \n    trackArtwork AS artwork,\n    trackBitrate AS bitrate,\n    trackYear AS year,\n    trackDuration AS duration,\n    trackFormat AS format,\n    albumName AS album,\n    artistName AS artist\n    FROM tracks \n    LEFT JOIN albums \n      ON tracks.trackAlbum = albums.albumId \n    LEFT JOIN artists ON \n      tracks.trackArtist = artists.artistId\n    WHERE albums.albumId = @id\n    ")
+        .all({ id: id });
     return tracks;
 };

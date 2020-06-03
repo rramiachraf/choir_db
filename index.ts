@@ -137,7 +137,7 @@ export const getArtists = (): ArtistInfo[] => {
   return artists;
 };
 
-export const getTracks = (album: string): SongMetadata[] => {
+export const getTracks = (id: number): SongMetadata[] => {
   const tracks = db
     .prepare(
       `
@@ -158,9 +158,9 @@ export const getTracks = (album: string): SongMetadata[] => {
       ON tracks.trackAlbum = albums.albumId 
     LEFT JOIN artists ON 
       tracks.trackArtist = artists.artistId
-    WHERE albums.albumName = @album
+    WHERE albums.albumId = @id
     `
     )
-    .all({ album });
+    .all({ id });
   return tracks;
 };
