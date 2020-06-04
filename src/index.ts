@@ -170,3 +170,10 @@ export const getTracks = (id: number): SongMetadata[] => {
     .all({ id });
   return tracks;
 };
+
+export const getAlbumArtwork = (id: number) => {
+  const { albumArtwork } = db
+    .prepare("SELECT albumArtwork FROM albums WHERE albumId = @id")
+    .get({ id });
+  return albumArtwork;
+};
