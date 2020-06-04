@@ -1,11 +1,15 @@
-import Database = require("better-sqlite3");
-import SCHEMA from "./SCHEMA";
-import { SongMetadata, AlbumInfo, ArtistInfo } from "./types";
+import Database = require('better-sqlite3');
+import SCHEMA from './SCHEMA';
+import { SongMetadata, AlbumInfo, ArtistInfo } from './types';
+import getAlbumArtwork from './getAlbumArtwork';
+import getTracks from './getTracks';
+import getArtists from './getArtists';
+import getAlbums from './getAlbums';
 
-const file = "config.db";
+const file = 'config.db';
 export const db = new Database(file);
 
-export const setTrackToDB = ({
+const setTrackToDB = ({
   artist,
   genres,
   album,
@@ -15,7 +19,7 @@ export const setTrackToDB = ({
   artwork,
   bitrate,
   duration,
-  format,
+  format
 }: SongMetadata): void => {
   const checkTables = db
     .prepare(
@@ -45,7 +49,7 @@ export const setTrackToDB = ({
 
   if (artist) {
     const preArtist = db.prepare(
-      "INSERT OR IGNORE INTO artists (artistName) VALUES (@artist)"
+      'INSERT OR IGNORE INTO artists (artistName) VALUES (@artist)'
     );
 
     preArtist.run({ artist });
@@ -80,7 +84,7 @@ export const setTrackToDB = ({
         album,
         artist,
         artwork,
-        year,
+        year
       });
     }
   }
@@ -117,63 +121,8 @@ export const setTrackToDB = ({
     album,
     bitrate,
     duration,
-    format,
+    format
   });
 };
 
-export const getAllAlbums = (): AlbumInfo[] => {
-  const statement = `
-    SELECT
-    albumId, 
-    albumName,
-    albumArtwork, 
-    albumYear,
-    artistName
-    FROM albums 
-    LEFT JOIN 
-    artists ON albums.albumArtist = artists.artistId
-  `;
-  const albums = db.prepare(statement).all();
-
-  return albums;
-};
-
-export const getArtists = (): ArtistInfo[] => {
-  const artists = db.prepare("SELECT * FROM artists").all();
-  return artists;
-};
-
-export const getTracks = (id: number): SongMetadata[] => {
-  const tracks = db
-    .prepare(
-      `
-    SELECT 
-    trackId AS id, 
-    trackPath AS path, 
-    trackTitle AS title, 
-    trackGenres AS genres, 
-    trackArtwork AS artwork,
-    trackBitrate AS bitrate,
-    trackYear AS year,
-    trackDuration AS duration,
-    trackFormat AS format,
-    albumName AS album,
-    artistName AS artist
-    FROM tracks 
-    LEFT JOIN albums 
-      ON tracks.trackAlbum = albums.albumId 
-    LEFT JOIN artists ON 
-      tracks.trackArtist = artists.artistId
-    WHERE albums.albumId = @id
-    `
-    )
-    .all({ id });
-  return tracks;
-};
-
-export const getAlbumArtwork = (id: number) => {
-  const { albumArtwork } = db
-    .prepare("SELECT albumArtwork FROM albums WHERE albumId = @id")
-    .get({ id });
-  return albumArtwork;
-};
+export { setTrackToDB, getAlbumArtwork, getTracks, getArtists, getAlbums };

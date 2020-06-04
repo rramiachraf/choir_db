@@ -33,3 +33,39 @@ VALUES(
   (SELECT artistId FROM artists WHERE artistName = 'Unknown')
   )
 `;
+
+export const GET_ALBUM_ARTWORK =
+  'SELECT albumArtwork FROM albums WHERE albumId = @id';
+
+export const GET_TRACKS = `
+  SELECT 
+  trackId AS id, 
+  trackPath AS path, 
+  trackTitle AS title, 
+  trackGenres AS genres, 
+  trackArtwork AS artwork,
+  trackBitrate AS bitrate,
+  trackYear AS year,
+  trackDuration AS duration,
+  trackFormat AS format,
+  albumName AS album,
+  artistName AS artist
+  FROM tracks 
+  LEFT JOIN albums 
+    ON tracks.trackAlbum = albums.albumId 
+  LEFT JOIN artists ON 
+    tracks.trackArtist = artists.artistId
+  WHERE albums.albumId = @id
+  `;
+
+export const GET_ALBUMS = `
+  SELECT
+  albumId, 
+  albumName,
+  albumArtwork, 
+  albumYear,
+  artistName
+  FROM albums 
+  LEFT JOIN 
+  artists ON albums.albumArtist = artists.artistId
+`;

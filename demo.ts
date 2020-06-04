@@ -1,4 +1,4 @@
-import { setTrackToDB, getTracks } from './src/index';
+import { setTrackToDB, getAlbums } from './src/index';
 
 const metadata = {
   path: '/home/achraf/Music/Superman.mp3',
@@ -13,10 +13,10 @@ const metadata = {
   format: 'MP3'
 };
 
-const id = 1;
+const id = 2;
 
-for (let i = 0; i < 20; i += 1) {
-  setTrackToDB(metadata);
-}
+// for (let i = 0; i < 20; i += 1) {
+//   setTrackToDB(metadata);
+// }
 
-// console.log(getTracks(id));
+console.log(getAlbums());
