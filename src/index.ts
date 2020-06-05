@@ -1,4 +1,4 @@
-import Database from 'better-sqlite3';
+import Database = require('better-sqlite3');
 import getAlbumArtwork from './getAlbumArtwork';
 import getTracks from './getTracks';
 import getArtists from './getArtists';

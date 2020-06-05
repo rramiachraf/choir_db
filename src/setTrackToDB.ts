@@ -1,6 +1,6 @@
 import db from './index';
 import { SCHEMA } from './SCHEMA';
-import { SongMetadata } from './types';
+import { SongMetadata } from './type';
 
 const setTrackToDB = ({
   artist,

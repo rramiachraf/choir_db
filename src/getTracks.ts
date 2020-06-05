@@ -1,5 +1,5 @@
 import db from './index';
-import { SongMetadata } from './types';
+import { SongMetadata } from './type';
 import { GET_TRACKS } from './SCHEMA';
 
 const getTracks = (id: number): SongMetadata[] => {

@@ -31,10 +31,10 @@
   resolved "https://registry.yarnpkg.com/@types/integer/-/integer-1.0.1.tgz#025d87e30d97f539fcc6087372af7d3672ffbbe6"
   integrity sha512-DmZDpSVnsuBrOhtHwE1oKmUJ3qVjHhhNQ7WnZy9/RhH3A24Ar+9o4SoaCWcTzQhalpRDIAMsfdoZLWNJtdBR7A==
 
-"@types/node@^14.0.5":
-  version "14.0.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.5.tgz#3d03acd3b3414cf67faf999aed11682ed121f22b"
-  integrity sha512-90hiq6/VqtQgX8Sp0EzeIsv3r+ellbGj4URKj5j30tLlZvRUpnAe9YbYnjl3pJM93GyXU0tghHhvXHq+5rnCKA==
+"@types/node@^14.0.11":
+  version "14.0.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.11.tgz#61d4886e2424da73b7b25547f59fdcb534c165a3"
+  integrity sha512-lCvvI24L21ZVeIiyIUHZ5Oflv1hhHQ5E1S25IRlKIXaRkVgmXpJMI3wUJkmym2bTbCe+WoIibQnMVAU3FguaOg==
 
 abbrev@1:
   version "1.1.1"
