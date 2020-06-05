@@ -15,8 +15,8 @@ const metadata = {
 
 const id = 2;
 
-// for (let i = 0; i < 20; i += 1) {
-//   setTrackToDB(metadata);
-// }
+for (let i = 0; i < 20; i += 1) {
+  setTrackToDB(metadata);
+}
 
-console.log(getAlbums());
+// console.log(getAlbums());

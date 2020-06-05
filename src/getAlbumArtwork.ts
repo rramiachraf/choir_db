@@ -1,4 +1,4 @@
-import { db } from './index';
+import db from './index';
 import { GET_ALBUM_ARTWORK } from './SCHEMA';
 
 const getAlbumArtwork = (id: number) => {

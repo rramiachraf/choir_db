@@ -1,4 +1,4 @@
-import { db } from './index';
+import db from './index';
 import { SongMetadata } from './types';
 import { GET_TRACKS } from './SCHEMA';
 

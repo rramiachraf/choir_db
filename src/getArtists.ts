@@ -1,8 +1,9 @@
-import { db } from './index';
+import db from './index';
+import { GET_ARTISTS } from './SCHEMA';
 import { ArtistInfo } from './types';
 
 const getArtists = (): ArtistInfo[] => {
-  const artists = db.prepare('SELECT * FROM artists').all();
+  const artists = db.prepare(GET_ARTISTS).all();
   return artists;
 };
 

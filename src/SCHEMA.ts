@@ -1,4 +1,4 @@
-export default `
+export const SCHEMA = `
 CREATE TABLE IF NOT EXISTS tracks (
   trackId INTEGER PRIMARY KEY,
   trackPath TEXT UNIQUE,
@@ -69,3 +69,5 @@ export const GET_ALBUMS = `
   LEFT JOIN 
   artists ON albums.albumArtist = artists.artistId
 `;
+
+export const GET_ARTISTS = 'SELECT * FROM artists';
