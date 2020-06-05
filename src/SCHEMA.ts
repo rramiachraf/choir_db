@@ -59,9 +59,9 @@ export const GET_TRACKS = `
   `;
 
 export const GET_ALBUMS = `
-  SELECT
-  albumId, 
+  SELECT DISTINCT
   albumName,
+  albumId,
   albumArtwork, 
   albumYear,
   artistName
