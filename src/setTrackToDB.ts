@@ -3,6 +3,7 @@ import { SCHEMA } from './SCHEMA';
 import { SongMetadata } from './type';
 
 const setTrackToDB = ({
+  no,
   artist,
   genres,
   album,
@@ -87,10 +88,11 @@ const setTrackToDB = ({
   /* -------------------------------------------------------------------------- */
 
   const preTrack = db.prepare(`
-      INSERT OR IGNORE INTO tracks (trackPath, trackArtist, trackTitle,
+      INSERT OR IGNORE INTO tracks (trackNo, trackPath, trackArtist, trackTitle,
         trackGenres, trackYear, trackArtwork, trackAlbum, 
         trackBitrate, trackDuration, trackFormat )
       VALUES (
+        @no,
         @path,
         (SELECT artistId FROM artists WHERE artistName = @artist),
         @title,
@@ -105,6 +107,7 @@ const setTrackToDB = ({
     `);
 
   preTrack.run({
+    no,
     path,
     artist,
     title,

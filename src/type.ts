@@ -1,4 +1,5 @@
 export interface SongMetadata {
+  no: number;
   path: string;
   artist: string | undefined;
   title: string;

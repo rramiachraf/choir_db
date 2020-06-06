@@ -1,6 +1,7 @@
 export const SCHEMA = `
 CREATE TABLE IF NOT EXISTS tracks (
   trackId INTEGER PRIMARY KEY,
+  trackNo INTEGER,
   trackPath TEXT UNIQUE,
   trackArtist INTEGER,
   trackTitle TEXT,
@@ -40,7 +41,8 @@ export const GET_ALBUM_ARTWORK =
 export const GET_TRACKS = `
   SELECT 
   trackId AS id, 
-  trackPath AS path, 
+  trackPath AS path,
+  trackNo as no, 
   trackTitle AS title, 
   trackGenres AS genres, 
   trackArtwork AS artwork,
@@ -56,6 +58,7 @@ export const GET_TRACKS = `
   LEFT JOIN artists ON 
     tracks.trackArtist = artists.artistId
   WHERE albums.albumId = @id
+  ORDER BY tracks.trackNo
   `;
 
 export const GET_ALBUMS = `
