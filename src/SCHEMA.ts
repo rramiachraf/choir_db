@@ -68,6 +68,7 @@ export const GET_ALBUMS = `
   FROM albums 
   LEFT JOIN 
   artists ON albums.albumArtist = artists.artistId
+  ORDER BY albumName
 `;
 
 export const GET_ARTISTS = 'SELECT * FROM artists';
