@@ -1,4 +1,5 @@
 lib
 node_modules
 main.js
+album_art
 *.db

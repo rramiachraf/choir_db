@@ -2,13 +2,13 @@ export interface SongMetadata {
   no: number;
   path: string;
   artist: string | undefined;
-  title: string;
-  genres: string[];
-  year: number;
-  artwork: string;
+  title: string | undefined;
+  genres: string[] | undefined;
+  year: number | undefined;
+  artwork: string | undefined;
   album: string | undefined;
-  bitrate: number;
-  duration: number;
+  bitrate: number | undefined;
+  duration: number | undefined;
   format: string;
 }
 

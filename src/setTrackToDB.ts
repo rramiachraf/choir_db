@@ -53,7 +53,7 @@ const setTrackToDB = ({
   /*                                    ALBUM                                   */
   /* -------------------------------------------------------------------------- */
 
-  if (album) {
+  if (album !== undefined && album !== 'Unknown') {
     const check = db
       .prepare(
         `
