@@ -9,10 +9,12 @@ import { SongMetadata } from './type';
 
 const fs = promises;
 
+const thumbnailsDir = join(homedir(), '.cache', 'choir', 'thumbnails');
+
 const InsertIntoDB = async (directory: string) => {
   // create the artworks directory to store album pictures
   try {
-    await fs.mkdir(join(homedir(), '.cache', 'choir', 'thumbnails'), {
+    await fs.mkdir(thumbnailsDir, {
       recursive: true
     });
   } catch (e) {
@@ -70,7 +72,7 @@ const getArtworkPath = (
   const image = `${album ? album.replace(/\W/g, '') : uuid()}-${year || ''}.${
     format && format.substr(format.lastIndexOf('/') + 1)
   }`;
-  return join(__dirname, 'album_art', image);
+  return join(thumbnailsDir, image);
 };
 
 export default InsertIntoDB;
