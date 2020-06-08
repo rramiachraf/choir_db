@@ -54,7 +54,7 @@ const parseAndSetToDB = async (path: string) => {
       year,
       album: album || 'Unknown',
       duration: parseInt(duration!.toFixed(0), 10),
-      bitrate: parseInt(bitrate!.toFixed(0), 10) / 1000,
+      bitrate: parseInt((bitrate! / 1000).toFixed(0), 10),
       artwork,
       format: extname(path).slice(1).toUpperCase()
     });
