@@ -3,6 +3,7 @@ import globby = require('globby');
 import * as mm from 'music-metadata';
 import { join, extname, parse } from 'path';
 import { promises } from 'fs';
+import { homedir } from 'os';
 import { v4 as uuid } from 'uuid';
 import { SongMetadata } from './type';
 
@@ -11,7 +12,9 @@ const fs = promises;
 const InsertIntoDB = async (directory: string) => {
   // create the artworks directory to store album pictures
   try {
-    await fs.mkdir(join(__dirname, 'album_art'), { recursive: true });
+    await fs.mkdir(join(homedir(), '.cache', 'choir', 'thumbnails'), {
+      recursive: true
+    });
   } catch (e) {
     console.log(e);
   }
